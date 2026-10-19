@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "platform": "Linux desktop OpenGL; not iPhone",
+  "checks": [
+    "actual pointer joystick",
+    "same-direction jitter preserves movement timer",
+    "button drag/hide",
+    "home to dungeon transition and back",
+    "hero HP/position preserved",
+    "actual hero riding speed x1.25",
+    "scene rendering"
+  ],
+  "isolated_save_directory_per_run": true
+}

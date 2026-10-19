@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "sha256": "086b9078755e2c006ce2caa7577b966016640bc0e2ceac90d8464833c290670b",
+  "bytes": 68900057,
+  "source_commit": "8fea1c60a29849c7a02c5fdf9676ff1bc9c03de9",
+  "files_verified": [
+    "core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/home/HomeWorld.java",
+    "core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/home/HomeScene.java",
+    "core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/ui/TouchJoystick.java",
+    "LICENSE.txt",
+    "CHANGELOG.md",
+    "docs/images/shattered-assist-logo.jpg",
+    "third_party/superpowers/manifest.json",
+    ".github/workflows/build-ios.yml"
+  ],
+  "zip_crc_passed": true
+}
