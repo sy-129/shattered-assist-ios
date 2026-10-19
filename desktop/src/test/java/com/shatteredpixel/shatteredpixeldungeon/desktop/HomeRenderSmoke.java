@@ -15,10 +15,10 @@ import com.watabou.utils.FileUtils;
 import java.lang.reflect.Method;
 
 public class HomeRenderSmoke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String output=System.getProperty("assist.preview.output",new java.io.File("build/render-check").getAbsolutePath());
-        String saves=output+"/isolated-saves/";
-        new java.io.File(saves).mkdirs();
+        new java.io.File(output).mkdirs();
+        String saves=java.nio.file.Files.createTempDirectory(new java.io.File(output).toPath(),"isolated-saves-").toString()+"/";
         Lwjgl3ApplicationConfiguration config=new Lwjgl3ApplicationConfiguration();
         config.setWindowedMode(1280,589);config.setTitle("Shattered Assist graphics verification");
         config.disableAudio(true);config.setForegroundFPS(60);
@@ -47,6 +47,7 @@ public class HomeRenderSmoke {
             private void invoke(String name){try{Method m=HomeScene.class.getDeclaredMethod(name);m.setAccessible(true);m.invoke(Game.scene());}catch(Exception e){throw new RuntimeException(e);}}
             @Override public void render(){super.render();frames++;
                 if(frames==60){homeX=HomeService.world.playerX;pointer((com.watabou.noosa.ui.Component)field(HomeScene.class,Game.scene(),"joystick"),9001,0.9f,0.5f,com.watabou.input.PointerEvent.Type.DOWN);}
+                if(frames==70){int before=HomeService.world.playerX;try{Method m=HomeScene.class.getDeclaredMethod("direction",int.class,int.class);m.setAccessible(true);m.invoke(Game.scene(),1,0);}catch(Exception e){throw new RuntimeException(e);}if(HomeService.world.playerX!=before)throw new AssertionError("Repeated direction bypassed movement timer");}
                 if(frames==80)pointer((com.watabou.noosa.ui.Component)field(HomeScene.class,Game.scene(),"joystick"),9001,0.9f,0.5f,com.watabou.input.PointerEvent.Type.UP);
                 if(frames==90 && HomeService.world.playerX<=homeX)throw new AssertionError("Actual joystick pointer did not move home character");
                 if(frames==120){capture("ShatteredAssist-home-render.png");

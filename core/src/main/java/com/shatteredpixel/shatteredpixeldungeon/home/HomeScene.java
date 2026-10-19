@@ -109,6 +109,9 @@ public class HomeScene extends PixelScene {
         Camera.main.snapTo(cx,cy);
     }
     private void direction(int dx,int dy){
+        // Touch-move events may repeat without changing direction. Preserve the
+        // movement timer so finger jitter cannot accelerate the home character.
+        if (this.dx==dx && this.dy==dy) return;
         this.dx=dx;this.dy=dy;repeat=0;
         if(dx==0&&dy==0){saveQuietly();return;}
         step();
