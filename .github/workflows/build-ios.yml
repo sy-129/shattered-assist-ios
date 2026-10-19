@@ -21,6 +21,7 @@ jobs:
           java-version: '21'
       - name: Verify actual game assist hooks
         run: |
+          python3 tools/verify_external_assets.py
           chmod +x gradlew
           set -o pipefail
           ./gradlew -PiosOnly :core:test --no-daemon --console=plain 2>&1 | tee assist-tests.log
@@ -28,6 +29,7 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild -version
+          python3 tools/prepare_icons.py
           ./gradlew -PiosOnly -Probovm.archs=arm64 -Probovm.iosSkipSigning=true :ios:createIPA --no-daemon --console=plain --info 2>&1 | tee ios-build.log
       - name: Package for user signing and verify
         run: python3 tools/package_ios.py
@@ -55,7 +57,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add packages
+          git add packages ios/assets/Assets.xcassets/AppIcon.appiconset
           git diff --cached --quiet && exit 0
           git commit -m 'Store built Shattered Assist IPA [skip ci]'
           git push

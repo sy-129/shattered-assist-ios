@@ -101,6 +101,11 @@ public class HeroSprite extends CharSprite {
 			die();
 	}
 	
+    @Override public synchronized void attack(int cell, com.watabou.utils.Callback callback) {
+        super.attack(cell, callback);
+        if (parent != null && visible) parent.add(new com.shatteredpixel.shatteredpixeldungeon.effects.AssistSlash(this, cell));
+    }
+
 	@Override
 	public void place( int p ) {
 		super.place( p );

@@ -1,0 +1,74 @@
+{
+  "repository": "https://github.com/SparklinLabs/superpowers-asset-packs",
+  "commit": "e8674a03ab4456802f71f848c4df79eccca23f7a",
+  "author": "Pixel-boy / Sparklin Labs",
+  "license": "CC0-1.0",
+  "assets": [
+    {
+      "file": "home/superpowers/tiles.png",
+      "upstream_path": "medieval-fantasy/background-elements/0-tileset.png",
+      "sha256": "ff01fdc39190d5d118f33be10e6c949dd4a47f7dccd62dfe9b90ed21263073d9",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/house.png",
+      "upstream_path": "medieval-fantasy/background-elements/1.png",
+      "sha256": "fb08f738e8ddf938af596ce0154eb5104d03931a5defac8a3fab40c69c876c4d",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/stable.png",
+      "upstream_path": "medieval-fantasy/background-elements/9.png",
+      "sha256": "5a1dafc82bbba137dbe55220ff29e36beb0b095bc9bf9203922aacac29cd8aee",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/tree.png",
+      "upstream_path": "medieval-fantasy/background-elements/18.png",
+      "sha256": "eb9000dd48cc1fa6bf89e82c388e9765d8f8482dd48304e43cba00ad16758159",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/well.png",
+      "upstream_path": "medieval-fantasy/background-elements/21.png",
+      "sha256": "901efb8cb0c150e66cdc23ed5d0c2c6d5bf74674c9500510543971ae55d1da7e",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/player.png",
+      "upstream_path": "medieval-fantasy/characters/1.png",
+      "sha256": "95d0e3cce27118a0239b71decc12171773c40d9d352f1237d6120d8eb461e44f",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/partner.png",
+      "upstream_path": "medieval-fantasy/characters/2.png",
+      "sha256": "66339f0d4dac950f7d9e8f2c357db3c91772ba72424be4ef6a7768a63bb07f05",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/chicken.png",
+      "upstream_path": "medieval-fantasy/animals/3.png",
+      "sha256": "7af7ad8687e2f629a7a76b94f16921d0df413cc53951e55158e411d6c941dc1b",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/rabbit.png",
+      "upstream_path": "medieval-fantasy/animals/6.png",
+      "sha256": "ae45db1195537306f8597a822da58a0a22fe50a5da4790a820e56fd386b7e73c",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/horse.png",
+      "upstream_path": "western-fps-2d/animals/5.png",
+      "sha256": "a512fd3ba1cfd7c960d6a902431baf491498d2042e1111621524e854d7fe9ed1",
+      "modified": false
+    },
+    {
+      "file": "home/superpowers/slash.png",
+      "upstream_path": "medieval-fantasy/fx/2.png",
+      "sha256": "93509a215a50ce3bfd01732c7f6994e2b73561881c95cf5cd6b656d537a1676a",
+      "modified": false
+    }
+  ]
+}

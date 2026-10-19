@@ -127,3 +127,10 @@ dependencies {
     implementation project(':services:updates:githubUpdates')
     implementation project(':services:news:shatteredNews')
 }
+// Host-only rendering check; not part of any distribution target.
+tasks.register('homeRenderSmoke', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.shatteredpixel.shatteredpixeldungeon.desktop.HomeRenderSmoke'
+    systemProperty 'assist.preview.output', rootProject.findProperty('previewOutput') ?: new File(rootProject.layout.buildDirectory.get().asFile, 'render-check').absolutePath
+}

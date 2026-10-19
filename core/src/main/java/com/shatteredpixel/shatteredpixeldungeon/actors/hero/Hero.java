@@ -738,7 +738,7 @@ public class Hero extends Char {
 
 		speed = AscensionChallenge.modifyHeroSpeed(speed);
 		
-		return speed;
+		return speed * (com.shatteredpixel.shatteredpixeldungeon.home.HomeService.riding() ? 1.25f : 1f);
 		
 	}
 

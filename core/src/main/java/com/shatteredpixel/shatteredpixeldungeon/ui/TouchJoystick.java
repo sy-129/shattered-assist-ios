@@ -17,11 +17,17 @@ import com.watabou.utils.PointF;
 /** One captured finger; gameplay still uses the original turn-based movement. */
 public class TouchJoystick extends Component {
     private final TouchStickState state = new TouchStickState();
-    private final CellSelector selector;
+    public interface DirectionSink { void direction(int dx, int dy); }
+    private final DirectionSink sink;
+    private final java.util.function.BooleanSupplier blocked;
     private final Image base, thumb;
     private final PointerArea touch;
     public TouchJoystick(CellSelector selector) {
-        this.selector = selector;
+        this(selector::setTouchDirection, () -> GameScene.interfaceBlockingHero() || Dungeon.hero == null || !Dungeon.hero.isAlive());
+    }
+    public TouchJoystick(DirectionSink sink, java.util.function.BooleanSupplier blocked) {
+        this.sink = sink;
+        this.blocked = blocked;
         base = new Image(circle("assist.stick.base", false));
         thumb = new Image(circle("assist.stick.thumb", true));
         add(base);
@@ -38,18 +44,18 @@ public class TouchJoystick extends Component {
             @Override protected void onPointerDown(PointerEvent event) { updateFinger(event, true); }
             @Override protected void onDrag(PointerEvent event) { updateFinger(event, false); }
             @Override protected void onPointerUp(PointerEvent event) {
-                if (state.end(event.id)) { TouchJoystick.this.selector.setTouchDirection(0, 0); layout(); }
+                if (state.end(event.id)) { TouchJoystick.this.sink.direction(0, 0); layout(); }
             }
         };
         add(touch);
     }
     private void updateFinger(PointerEvent event, boolean down) {
-        if (GameScene.interfaceBlockingHero() || Dungeon.hero == null || !Dungeon.hero.isAlive()) return;
+        if (blocked.getAsBoolean()) return;
         PointF p = camera().screenToCamera((int)event.current.x, (int)event.current.y);
         float nx = (p.x - (x + width/2)) / (width/2);
         float ny = (p.y - (y + height/2)) / (height/2);
         boolean accepted = down ? state.begin(event.id, nx, ny) : state.move(event.id, nx, ny);
-        if (accepted) { selector.setTouchDirection(state.dx, state.dy); layout(); }
+        if (accepted) { sink.direction(state.dx, state.dy); layout(); }
     }
     @Override protected void layout() {
         if (base == null) return;
@@ -63,10 +69,10 @@ public class TouchJoystick extends Component {
     }
     @Override public void update() {
         super.update();
-        if (GameScene.interfaceBlockingHero() || Dungeon.hero == null || !Dungeon.hero.isAlive()) cancel();
+        if (blocked.getAsBoolean()) cancel();
     }
     public void cancel() {
-        if (state.pointer != -1) { state.cancel(); selector.setTouchDirection(0, 0); }
+        if (state.pointer != -1) { state.cancel(); sink.direction(0, 0); }
         touch.reset();
         layout();
     }

@@ -1,4 +1,6 @@
-# Shattered Assist · 地牢辅助版
+# Shattered Assist · 地牢与家园
+
+<img src="docs/images/shattered-assist-logo.jpg" width="180" alt="用户提供的修改版图标">
 
 基于 [Shattered Pixel Dungeon](https://github.com/00-Evan/shattered-pixel-dungeon) 4.0.2 的个人修改版，保留完整游戏和原作者署名，按 GPL-3.0-or-later 提供对应源码。不是原作者的官方发行版。
 
@@ -8,9 +10,30 @@
 
 感谢 **Oleg Dolya（[Watabou](https://watabou.itch.io/)）** 创作原版 [Pixel Dungeon](https://github.com/00-Evan/pixel-dungeon-gradle)，为本项目及其上游提供基础；同时感谢上游代码、美术、音效、翻译和其他贡献者，完整署名以游戏内鸣谢及上游记录为准。
 
+家园人物、建筑、动物、马匹和挥砍素材感谢 **Pixel-boy / Sparklin Labs** 的 [Superpowers Asset Packs](https://github.com/SparklinLabs/superpowers-asset-packs)，采用 CC0-1.0。原始文件、固定提交和哈希详见 [素材来源](third_party/superpowers/manifest.json)，许可证随源码和游戏资源保留。用户提供的图标单独保存，不标注为该素材库作品。
+
 本仓库仅在上游作品基础上增加个人辅助菜单、玩法选项和 iOS 构建配置，原游戏及原有素材的贡献归原作者和对应贡献者所有。本修改版由本仓库维护，与原作者的官方发行版独立，不代表原作者认可或背书。
 
 原始项目说明见 [README_UPSTREAM.md](README_UPSTREAM.md)，许可证见 [LICENSE.txt](LICENSE.txt)。保留现有版权声明、游戏内鸣谢及许可证；本项目的修改按 **GPL-3.0-or-later** 提供。
+
+## 最新更新：独立家园与中文触控
+
+- **横屏手机适配**：完整安全区、角色与地图放大、界面大小调节、圆形八方向触控盘。
+- **中文辅助 UI**：按钮可拖动、记住位置、隐藏，右上角游戏菜单保留恢复入口。
+- **独立家园地图**：住宅、马厩、水井、12块农田、池塘与林地，可从首页或地牢菜单进入。
+- **家庭生活**：成年伴侣交谈与赠礼、求婚结婚、计划孩子、照顾与长期成长、扩建房舍。
+- **农牧生态循环**：马／鸡／兔三种动物，饲养、饮水、觅食、繁殖、幼崽成长、衰老；作物、雨水与四季影响资源。
+- **坐骑**：家园骑乘动画，返回地牢后保留骑乘状态，地牢移动速度增加25%。
+- **打击表现**：保留原战斗动画与判定，追加五帧像素挥砍特效。
+- 使用你提供的图标作为 iOS 应用图标、启动画面和仓库展示图，原图保存在 docs/images。
+
+家园规则与操作详见 [家园指南](docs/HOME_SYSTEM.md)，全部更新见 [CHANGELOG.md](CHANGELOG.md)。家园时间以点击“休息一天”推进，不使用真实时间；这是有明确规则的三物种生态模拟，不是现实生态模型。
+
+### 实际桌面渲染验证（不是 iPhone 截图）
+
+![中文辅助与方向盘](docs/images/ShatteredAssist-dungeon-controls-render.png)
+![家园地图](docs/images/ShatteredAssist-family-render.png)
+![家庭互动菜单](docs/images/ShatteredAssist-home-menu-render.png)
 
 ## 安装
 

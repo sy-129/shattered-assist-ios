@@ -58,6 +58,13 @@ public class WndGame extends Window {
             }
         });
 
+        addButton(new RedButton("进入独立家园") {
+            @Override protected void onClick() {
+                try { com.shatteredpixel.shatteredpixeldungeon.home.HomeService.open(true); hide(); }
+                catch (java.io.IOException e) { GameScene.show(new WndMessage("进入家园失败："+e.getMessage())); }
+            }
+        });
+
         //settings
 		RedButton curBtn;
 		addButton( curBtn = new RedButton( Messages.get(this, "settings") ) {

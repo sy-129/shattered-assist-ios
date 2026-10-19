@@ -101,6 +101,14 @@ public class AssistIntegrationTest {
         hunger.affectHunger(-20);
         assertEquals(20, hunger.hunger());
     }
+    @Test public void movableHiddenControlsPersistAndClampToScreenRange() {
+        AssistSettings.buttonHidden=true;AssistSettings.showJoystick=false;
+        AssistSettings.buttonX=2;AssistSettings.buttonY=-1;AssistSettings.save();
+        AssistSettings.buttonHidden=false;AssistSettings.showJoystick=true;
+        AssistSettings.load();
+        assertTrue(AssistSettings.buttonHidden);assertFalse(AssistSettings.showJoystick);
+        assertEquals(1,AssistSettings.buttonX,0);assertEquals(0,AssistSettings.buttonY,0);
+    }
     @Test public void chineseLabelsResolveThroughActualGameMessageLoader() {
         Gdx.files = (Files)Proxy.newProxyInstance(Files.class.getClassLoader(), new Class<?>[]{Files.class},
                 (proxy, method, args) -> new FileHandle(new File("core/src/main/assets", (String)args[0])));

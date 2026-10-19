@@ -104,6 +104,12 @@ public class WndAssist extends Window {
         row(new RedButton(Messages.get(this, "ui_out"), 8) {
             @Override protected void onClick() { changeUIScale(-1); }
         });
+        row(new RedButton("进入独立家园", 8) {
+            @Override protected void onClick() {
+                try { com.shatteredpixel.shatteredpixeldungeon.home.HomeService.open(true); hide(); }
+                catch (java.io.IOException e) { GameScene.show(new WndMessage("进入家园失败："+e.getMessage())); }
+            }
+        });
         row(new RedButton(Messages.get(this, "reset"), 8) {
             @Override protected void onClick() {
                 AssistSettings.reset();
@@ -117,8 +123,8 @@ public class WndAssist extends Window {
         ScrollPane pane = new ScrollPane(content);
         add(pane);
         int viewportHeight = Math.min(nextY - 3, Math.max(80, (int)PixelScene.uiCamera.height - 24));
-        pane.setRect(0, 0, WIDTH, viewportHeight);
         resize(WIDTH, viewportHeight);
+        pane.setRect(0, 0, WIDTH, viewportHeight);
     }
     private void changeUIScale(int change) {
         int scale = Math.max(2, Math.min(PixelScene.maxDefaultZoom, PixelScene.defaultZoom + change));
@@ -126,6 +132,8 @@ public class WndAssist extends Window {
             SPDSettings.scale(scale);
             hide();
             ShatteredPixelDungeon.seamlessResetScene();
+        } else {
+            GameScene.show(new WndMessage(change > 0 ? "已经是适合当前屏幕的最大界面。角色和地图可以单独放大。" : "已经是最小界面。"));
         }
     }
     private String damageLabel() {

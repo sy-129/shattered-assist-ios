@@ -5,7 +5,7 @@ include ':core'
 //platform modules
 if (!hasProperty('iosOnly')) include ':android'
 include ':ios'
-if (!hasProperty('iosOnly')) include ':desktop'
+if (!hasProperty('iosOnly') || hasProperty('desktopPreview')) include ':desktop'
 
 //service modules
 include ':services'

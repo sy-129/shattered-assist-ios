@@ -235,6 +235,8 @@ public class GameScene extends PixelScene {
 		}
 
 		AssistSettings.load();
+        try { com.shatteredpixel.shatteredpixeldungeon.home.HomeService.load(Math.max(1, GamesInProgress.curSlot)); }
+        catch (IOException error) { GLog.w("家园存档读取失败：" + error.getMessage()); }
 		Dungeon.level.playLevelMusic();
 
 		SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
@@ -328,7 +330,8 @@ public class GameScene extends PixelScene {
 		hero = new HeroSprite();
 		hero.place( Dungeon.hero.pos );
 		hero.updateArmor();
-		mobs.add( hero );
+		mobs.add(new com.shatteredpixel.shatteredpixeldungeon.home.MountVisual(hero));
+        mobs.add( hero );
 		
 		for (Mob mob : Dungeon.level.mobs) {
 			addMobSprite( mob );

@@ -242,6 +242,15 @@ public class TitleScene extends PixelScene {
 			btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
 		}
 
+        com.shatteredpixel.shatteredpixeldungeon.ui.RedButton home = new com.shatteredpixel.shatteredpixeldungeon.ui.RedButton("独立家园", 8) {
+            @Override protected void onClick() {
+                try { com.shatteredpixel.shatteredpixeldungeon.home.HomeService.open(false); }
+                catch (java.io.IOException e) { TitleScene.this.addToFront(new com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage("家园读取失败："+e.getMessage())); }
+            }
+        };
+        home.setRect(insets.left+4, h-insets.bottom-26, 58, 22);
+        add(home);
+
 		version = new BitmapText( "Assist / v" + Game.version, pixelFont);
 		version.measure();
 		version.hardlight( 0x888888 );
