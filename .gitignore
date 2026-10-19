@@ -18,3 +18,10 @@ local.properties
 #intellij project files
 *.iml
 *.idea
+
+# Python tools
+__pycache__/
+*.pyc
+# Build logs
+*-build.log
+assist-tests.log

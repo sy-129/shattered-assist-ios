@@ -9,19 +9,22 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.CheckBox;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ScrollPane;
+import com.watabou.noosa.ui.Component;
 
 public class WndAssist extends Window {
     private static final int WIDTH = 170;
     private int nextY;
+    private final Component content = new Component();
     public WndAssist() {
         RenderedTextBlock title = PixelScene.renderTextBlock(Messages.get(this, "title"), 9);
         title.hardlight(TITLE_COLOR);
         title.setPos(0, 0);
-        add(title);
+        content.add(title);
         RenderedTextBlock note = PixelScene.renderTextBlock(Messages.get(this, "note"), 6);
         note.maxWidth(WIDTH);
         note.setPos(0, title.bottom() + 4);
-        add(note);
+        content.add(note);
         nextY = (int)note.bottom() + 5;
         row(new RedButton(damageLabel(), 8) {
             @Override protected void onClick() {
@@ -66,13 +69,18 @@ public class WndAssist extends Window {
         row(new RedButton(Messages.get(this, "close"), 8) {
             @Override protected void onClick() { hide(); }
         });
-        resize(WIDTH, nextY - 3);
+        content.setSize(WIDTH, nextY - 3);
+        ScrollPane pane = new ScrollPane(content);
+        add(pane);
+        int viewportHeight = Math.min(nextY - 3, Math.max(80, (int)PixelScene.uiCamera.height - 24));
+        pane.setRect(0, 0, WIDTH, viewportHeight);
+        resize(WIDTH, viewportHeight);
     }
     private String damageLabel() {
         return Messages.get(WndAssist.class, "damage", AssistSettings.damageMultiplier);
     }
     private void row(RedButton button) {
-        add(button);
+        content.add(button);
         button.setRect(0, nextY, WIDTH, 20);
         nextY += 23;
     }
