@@ -2,6 +2,16 @@
 
 基于 [Shattered Pixel Dungeon](https://github.com/00-Evan/shattered-pixel-dungeon) 4.0.2 的个人修改版，保留完整游戏和原作者署名，按 GPL-3.0-or-later 提供对应源码。不是原作者的官方发行版。
 
+## 鸣谢原作者
+
+感谢 **Evan Debenham（[00-Evan](https://github.com/00-Evan)）** 创作并持续维护 [Shattered Pixel Dungeon（破碎的像素地牢）](https://github.com/00-Evan/shattered-pixel-dungeon)，并以开源方式分享完整游戏。
+
+感谢 **Oleg Dolya（[Watabou](https://watabou.itch.io/)）** 创作原版 [Pixel Dungeon](https://github.com/00-Evan/pixel-dungeon-gradle)，为本项目及其上游提供基础；同时感谢上游代码、美术、音效、翻译和其他贡献者，完整署名以游戏内鸣谢及上游记录为准。
+
+本仓库仅在上游作品基础上增加个人辅助菜单、玩法选项和 iOS 构建配置，原游戏及原有素材的贡献归原作者和对应贡献者所有。本修改版由本仓库维护，与原作者的官方发行版独立，不代表原作者认可或背书。
+
+原始项目说明见 [README_UPSTREAM.md](README_UPSTREAM.md)，许可证见 [LICENSE.txt](LICENSE.txt)。保留现有版权声明、游戏内鸣谢及许可证；本项目的修改按 **GPL-3.0-or-later** 提供。
+
 ## 安装
 
 构建成功后下载 [ShatteredAssist.ipa](packages/ShatteredAssist.ipa?raw=true)，导入轻松签，使用你自己的有效证书及描述文件签名后安装。无需额外授权码、巨魔、越狱或跨进程权限。证书有效性、设备登记、开发者模式等仍遵循你的签名方式要求。
