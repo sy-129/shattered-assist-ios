@@ -1,0 +1,11 @@
+{
+  "source_commit": "9f61cd6b54e05a7eecf12889ff9b3c85ce5b5df9",
+  "upstream_commit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+  "bundle_id": "io.github.sy129.shatteredassist.apple",
+  "architecture": "arm64",
+  "minimum_ios": "13.0",
+  "signing": "ad-hoc; user must re-sign with valid certificate",
+  "device_validation": "pending: iPhone 16 Pro / iOS 27.0.1",
+  "sha256": "672510025c194888bb9e85479d7fb95b0342b701d664839cf999403267e786e4",
+  "bytes": 62937432
+}
