@@ -20,7 +20,7 @@
 
 ## 游戏内辅助
 
-进入地牢，等到角色可操作时点击左侧“辅助”按钮；长按可切换到另一侧。菜单只存在于本游戏内。
+进入地牢，等到角色可操作时点击“辅助”按钮；按住拖动可移动，设置会记住位置。菜单中可隐藏按钮，隐藏后在右上角游戏菜单选择“辅助设置／恢复按钮”。左下角圆形方向盘可八方向移动、碰到敌人时按原游戏规则攻击，松手或切换窗口会停止。菜单只存在于本游戏内。
 
 - 武器／徒手攻击倍率：1、2、5、10倍循环；倍率应用在伤害随机值计算后、敌人防御结算前，不包含法杖等独立伤害来源。
 - 阻止生命伤害：阻止进入 Hero.damage 的正伤害，不承诺覆盖脚本直接死亡、剧情结算或生命上限变化。
@@ -46,4 +46,6 @@ GitHub Actions 自动执行上述流程，保存编译、测试和验包记录�
 
 上游源码基线：57a4e06a4caf162446d1c28caa7983f0493fecf0。
 
-新增 assist/AssistRules、AssistSettings、ui/AssistButton、windows/WndAssist；在 Hero、Hunger、GameScene 接入；更改应用名称和 bundle ID；保留原 Java 类包名供 RoboVM 正确启动。英文／简体中文菜单，其他语言回退英文。保留原游戏资源与署名，详情见 README_UPSTREAM.md 和 LICENSE.txt。
+新增 assist/AssistRules、AssistSettings、ui/AssistButton、windows/WndAssist；在 Hero、Hunger、GameScene 接入；更改应用名称和 bundle ID；保留原 Java 类包名供 RoboVM 正确启动。辅助菜单统一中文，iOS默认简体中文；横屏保留，角色默认放大，界面使用安全区内可容纳的最大尺寸。保留原游戏资源与署名，详情见 README_UPSTREAM.md 和 LICENSE.txt。
+
+更新记录见 [CHANGELOG.md](CHANGELOG.md)，手机适配故障与验证见 [docs/MOBILE_CONTROLS.md](docs/MOBILE_CONTROLS.md)。

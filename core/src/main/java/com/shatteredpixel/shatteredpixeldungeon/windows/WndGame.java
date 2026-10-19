@@ -50,7 +50,15 @@ public class WndGame extends Window {
 		
 		super();
 
-		//settings
+		// Always available even if the movable assist button was hidden.
+        addButton(new RedButton(Messages.get(WndAssist.class, "menu")) {
+            @Override protected void onClick() {
+                hide();
+                GameScene.show(new WndAssist());
+            }
+        });
+
+        //settings
 		RedButton curBtn;
 		addButton( curBtn = new RedButton( Messages.get(this, "settings") ) {
 			@Override

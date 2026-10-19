@@ -2,6 +2,13 @@
 package com.shatteredpixel.shatteredpixeldungeon.assist;
 
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.files.FileHandle;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndAssist;
+import java.io.File;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -93,6 +100,19 @@ public class AssistIntegrationTest {
         AssistSettings.noHunger = false;
         hunger.affectHunger(-20);
         assertEquals(20, hunger.hunger());
+    }
+    @Test public void chineseLabelsResolveThroughActualGameMessageLoader() {
+        Gdx.files = (Files)Proxy.newProxyInstance(Files.class.getClassLoader(), new Class<?>[]{Files.class},
+                (proxy, method, args) -> new FileHandle(new File("core/src/main/assets", (String)args[0])));
+        Messages.setup(Languages.CHI_SMPL);
+        assertEquals("辅助", Messages.get(WndAssist.class, "button"));
+        assertEquals("武器伤害：5 倍", Messages.get(WndAssist.class, "damage", 5));
+        for (String key : new String[]{"title","note","shield","food","heal","reset","close","visible",
+                "joystick","button_reset","zoom_in","zoom_out","ui_in","ui_out","menu"}) {
+            String value = Messages.get(WndAssist.class, key);
+            assertFalse(key, value.equals(Messages.NO_TEXT_FOUND));
+            assertTrue(key, value.codePoints().anyMatch(c -> c >= 0x4e00 && c <= 0x9fff));
+        }
     }
     @Test public void actualHeroRejectsLethalDamageWhenEnabled() {
         Hero hero = Dungeon.hero;

@@ -5,6 +5,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.assist.AssistSettings;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.CheckBox;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
@@ -60,6 +63,47 @@ public class WndAssist extends Window {
                 }
             }
         });
+        CheckBox visible = new CheckBox(Messages.get(this, "visible")) {
+            @Override protected void onClick() {
+                super.onClick();
+                AssistSettings.buttonHidden = !checked();
+                AssistSettings.save();
+                GameScene.refreshAssistControls();
+            }
+        };
+        visible.checked(!AssistSettings.buttonHidden);
+        row(visible);
+        CheckBox joystick = new CheckBox(Messages.get(this, "joystick")) {
+            @Override protected void onClick() {
+                super.onClick();
+                AssistSettings.showJoystick = checked();
+                AssistSettings.save();
+                GameScene.refreshAssistControls();
+                GameScene.layoutTags();
+            }
+        };
+        joystick.checked(AssistSettings.showJoystick);
+        row(joystick);
+        row(new RedButton(Messages.get(this, "button_reset"), 8) {
+            @Override protected void onClick() {
+                AssistSettings.buttonX = 0; AssistSettings.buttonY = 0.35f;
+                AssistSettings.buttonHidden = false;
+                AssistSettings.save(); GameScene.refreshAssistControls();
+                hide();
+            }
+        });
+        row(new RedButton(Messages.get(this, "zoom_in"), 8) {
+            @Override protected void onClick() { GameScene.adjustAssistZoom(1); }
+        });
+        row(new RedButton(Messages.get(this, "zoom_out"), 8) {
+            @Override protected void onClick() { GameScene.adjustAssistZoom(-1); }
+        });
+        row(new RedButton(Messages.get(this, "ui_in"), 8) {
+            @Override protected void onClick() { changeUIScale(1); }
+        });
+        row(new RedButton(Messages.get(this, "ui_out"), 8) {
+            @Override protected void onClick() { changeUIScale(-1); }
+        });
         row(new RedButton(Messages.get(this, "reset"), 8) {
             @Override protected void onClick() {
                 AssistSettings.reset();
@@ -75,6 +119,14 @@ public class WndAssist extends Window {
         int viewportHeight = Math.min(nextY - 3, Math.max(80, (int)PixelScene.uiCamera.height - 24));
         pane.setRect(0, 0, WIDTH, viewportHeight);
         resize(WIDTH, viewportHeight);
+    }
+    private void changeUIScale(int change) {
+        int scale = Math.max(2, Math.min(PixelScene.maxDefaultZoom, PixelScene.defaultZoom + change));
+        if (scale != PixelScene.defaultZoom) {
+            SPDSettings.scale(scale);
+            hide();
+            ShatteredPixelDungeon.seamlessResetScene();
+        }
     }
     private String damageLabel() {
         return Messages.get(WndAssist.class, "damage", AssistSettings.damageMultiplier);

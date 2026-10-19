@@ -49,6 +49,8 @@ jobs:
           path: |
             packages/ShatteredAssist.ipa
             packages/ShatteredAssist.ipa.sha256
+            packages/ShatteredAssist-source.zip
+            packages/ShatteredAssist-source.zip.sha256
       - name: Store download in repository
         run: |
           git config user.name 'github-actions[bot]'

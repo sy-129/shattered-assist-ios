@@ -5,6 +5,6 @@
 - [IPA SHA-256](ShatteredAssist.ipa.sha256) · [源码 ZIP SHA-256](ShatteredAssist-source.zip.sha256)
 - [构建与验证信息](build-info.json)
 
-源码ZIP快照提交：9796e1277a1b1d6542c6e7b0ac24dd7689b7b18c（包含原作者鸣谢）。IPA对应源码构建提交见build-info.json。
+源码ZIP与IPA均由构建工作流生成，当前构建提交及两个文件的SHA256见build-info.json。源码包包含原作者鸣谢和更新记录。
 
 编译与包完整性检查已通过；iPhone16Pro／iOS27.0.1实际安装运行待验证。

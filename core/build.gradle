@@ -8,3 +8,5 @@ dependencies {
     implementation project(':services')
     testImplementation 'junit:junit:4.13.2'
 }
+
+test { workingDir rootProject.projectDir }

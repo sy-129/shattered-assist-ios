@@ -48,6 +48,17 @@ with tempfile.TemporaryDirectory() as temporary:
     with zipfile.ZipFile(target) as z:
         assert z.testzip() is None
         assert any(n.endswith('messages/windows/windows_zh.properties') for n in z.namelist())
+    source_zip = output / 'ShatteredAssist-source.zip'
+    tracked = subprocess.check_output(['git', 'ls-files', '-z'], cwd=root).decode().split('\0')
+    with zipfile.ZipFile(source_zip, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as source_archive:
+        for relative in tracked:
+            if relative and not relative.startswith('packages/'):
+                source_archive.write(root / relative, 'ShatteredAssist/' + relative)
+    with zipfile.ZipFile(source_zip) as source_archive:
+        assert source_archive.testzip() is None
+    source_digest = hashlib.sha256(source_zip.read_bytes()).hexdigest()
+    (output / 'ShatteredAssist-source.zip.sha256').write_text(source_digest + '  ShatteredAssist-source.zip\n')
+    provenance.update(source_zip_sha256=source_digest)
     digest = hashlib.sha256(target.read_bytes()).hexdigest()
     provenance.update(sha256=digest, bytes=target.stat().st_size)
     (output / 'ShatteredAssist.ipa.sha256').write_text(digest + '  ShatteredAssist.ipa\n')

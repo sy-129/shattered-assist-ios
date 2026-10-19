@@ -15,8 +15,8 @@ allprojects {
         appPackageName = 'io.github.sy129.shatteredassist'
 
         //Full releases gets +2 on version code, needed for an F-Droid quirk
-        appVersionCode = 922
-        appVersionName = '4.0.2'
+        appVersionCode = 923
+        appVersionName = '4.0.2-assist.2'
 
         appJavaCompatibility = JavaVersion.VERSION_11
 

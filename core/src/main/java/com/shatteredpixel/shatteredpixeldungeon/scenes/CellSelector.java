@@ -351,13 +351,40 @@ public class CellSelector extends ScrollArea {
 	};
 
 	private GameAction leftStickAction = SPDAction.NONE;
+    private GameAction touchStickAction = SPDAction.NONE;
+    public void setTouchDirection(int dx, int dy) {
+        GameAction next = actionFromStick(dx, dy);
+        if (next == SPDAction.NONE) {
+            if (touchStickAction != SPDAction.NONE) leftStickAction = SPDAction.NONE;
+            touchStickAction = SPDAction.NONE;
+            lastCellMoved = -1;
+            heldDelay = 0;
+            return;
+        }
+        if (GameScene.interfaceBlockingHero() || Dungeon.hero == null || !Dungeon.hero.isAlive()) return;
+        if (next != touchStickAction) {
+            touchStickAction = leftStickAction = next;
+            lastCellMoved = -1;
+            heldDelay = initialDelay();
+            Dungeon.hero.resting = false;
+            moveFromActions(next);
+        }
+    }
+    public void adjustTouchZoom(int change) {
+        zoom(camera.zoom + change);
+        mouseZoom = camera.zoom;
+    }
 
 	@Override
 	public void update() {
 		super.update();
 
-		GameAction newLeftStick = actionFromStick(ControllerHandler.leftStickPosition.x,
-				ControllerHandler.leftStickPosition.y);
+		if (GameScene.interfaceBlockingHero()) {
+            setTouchDirection(0, 0);
+            return;
+        }
+        GameAction newLeftStick = touchStickAction != SPDAction.NONE ? touchStickAction :
+                actionFromStick(ControllerHandler.leftStickPosition.x, ControllerHandler.leftStickPosition.y);
 
 		//skip logic here if there's no input, or if input is blocked
 		if ((newLeftStick == leftStickAction
@@ -462,6 +489,7 @@ public class CellSelector extends ScrollArea {
 	}
 
 	public void processKeyHold() {
+        if (GameScene.interfaceBlockingHero()) return;
 		//prioritize moving by controller stick over moving via keys
 		if (!directionFromAction(leftStickAction).isZero() && heldDelay < 0) {
 			enabled = Dungeon.hero.ready = true;

@@ -112,6 +112,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.TargetHealthIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Toast;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Toolbar;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AssistButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.TouchJoystick;
 import com.shatteredpixel.shatteredpixeldungeon.assist.AssistSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -212,6 +213,8 @@ public class GameScene extends PixelScene {
 	private static boolean invVisible = true;
 
 	private Toolbar toolbar;
+    private AssistButton assistButton;
+    private TouchJoystick touchJoystick;
 	private Toast prompt;
 
 	private AttackIndicator attack;
@@ -548,9 +551,9 @@ public class GameScene extends PixelScene {
 			inventory.setPos(uiCamera.width - inventory.width() - insets.right, uiCamera.height - inventory.height() - insets.bottom);
 			add(inventory);
 
-			toolbar.setRect( insets.left, uiCamera.height - toolbar.height() - inventory.height() - insets.bottom, uiCamera.width - insets.right, toolbar.height() );
+			toolbar.setRect( insets.left, uiCamera.height - toolbar.height() - inventory.height() - insets.bottom, uiCamera.width - insets.left - insets.right, toolbar.height() );
 		} else {
-			toolbar.setRect( insets.left, uiCamera.height - toolbar.height() - insets.bottom, uiCamera.width - insets.right, toolbar.height() );
+			toolbar.setRect( insets.left, uiCamera.height - toolbar.height() - insets.bottom, uiCamera.width - insets.left - insets.right, toolbar.height() );
 		}
 
 		if (insets.bottom > 0){
@@ -564,10 +567,16 @@ public class GameScene extends PixelScene {
 			add(blocker);
 		}
 
-        AssistButton assist = new AssistButton();
-        assist.camera = uiCamera;
-        assist.setRect(insets.left + 2, insets.top + 52, 36, 22);
-        add(assist);
+        assistButton = new AssistButton();
+        assistButton.camera = uiCamera;
+        assistButton.setSize(38, 24);
+        add(assistButton);
+        assistButton.restorePosition();
+        touchJoystick = new TouchJoystick(cellSelector);
+        touchJoystick.camera = uiCamera;
+        touchJoystick.setRect(insets.left+8, toolbar.top()-64, 56, 56);
+        add(touchJoystick);
+        refreshAssistControls();
 
 		layoutTags();
 
@@ -846,6 +855,8 @@ public class GameScene extends PixelScene {
 	
 	@Override
 	public synchronized void onPause() {
+        if (touchJoystick != null) touchJoystick.cancel();
+        if (assistButton != null) assistButton.cancelDrag();
 		try {
 			if (!Dungeon.hero.ready) waitForActorThread(500, false);
 			Dungeon.saveAll();
@@ -1026,6 +1037,10 @@ public class GameScene extends PixelScene {
 			}
 		}
 
+        if (AssistSettings.showJoystick && scene.touchJoystick != null && SPDSettings.interfaceSize() == 0) {
+            scene.log.setRect(insets.left, scene.touchJoystick.top()-3,
+                    uiCamera.width - insets.left - insets.right - tagWidth, 0);
+        }
 		float pos = scene.toolbar.top();
 		if (tagsOnLeft && SPDSettings.interfaceSize() > 0){
 			pos = scene.status.top();
@@ -1747,6 +1762,22 @@ public class GameScene extends PixelScene {
 		}
 	}
 	
+	public static void refreshAssistControls() {
+        if (scene == null) return;
+        if (scene.assistButton != null) {
+            scene.assistButton.cancelDrag();
+            scene.assistButton.visible = scene.assistButton.active = !AssistSettings.buttonHidden;
+            scene.assistButton.restorePosition();
+        }
+        if (scene.touchJoystick != null) {
+            scene.touchJoystick.cancel();
+            scene.touchJoystick.visible = scene.touchJoystick.active = AssistSettings.showJoystick;
+        }
+    }
+    public static void adjustAssistZoom(int change) {
+        if (cellSelector != null) cellSelector.adjustTouchZoom(change);
+    }
+
 	public static void checkKeyHold(){
 		cellSelector.processKeyHold();
 	}

@@ -132,6 +132,9 @@ public class PixelScene extends Scene {
 		maxDefaultZoom = (int)Math.min(w/minWidth, h/minHeight);
 		maxDefaultZoom = Math.max(2, maxDefaultZoom);
 		defaultZoom = SPDSettings.scale();
+        if (DeviceCompat.isiOS() && SPDSettings.interfaceSize() == 0 && defaultZoom == 0) {
+            defaultZoom = maxDefaultZoom; // largest UI that still fits the safe viewport
+        }
 
 		if (defaultZoom < Math.ceil( Game.density * 2 ) || defaultZoom > maxDefaultZoom){
 			defaultZoom = (int)GameMath.gate(2, (int)Math.ceil( Game.density * scaleFactor ), maxDefaultZoom);
@@ -414,8 +417,10 @@ public class PixelScene extends Scene {
 		RectF all = Game.platform.getSafeInsets(PlatformSupport.INSET_ALL);
 		RectF blocking = Game.platform.getSafeInsets(PlatformSupport.INSET_BLK);
 
-		all.left =  blocking.left;
-		all.right = blocking.right;
+		if (!DeviceCompat.isiOS()) {
+            all.left = blocking.left;
+            all.right = blocking.right;
+        }
 
 		return all.scale(1f/defaultZoom);
 	}

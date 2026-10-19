@@ -93,6 +93,14 @@ public class IOSLauncher extends IOSApplication.Delegate {
 				nsDictionary.write(finalPath, false);
 			}
 			SPDSettings.set(new IOSPreferences(nsDictionary, finalPath.getAbsolutePath()));
+            SPDSettings.language(com.shatteredpixel.shatteredpixeldungeon.messages.Languages.CHI_SMPL);
+            // One-time migration for existing installations; do not reset assists or saves.
+            if (SPDSettings.getInt("assist.mobile-layout-version", 0) < 2) {
+                SPDSettings.interfaceSize(0);
+                SPDSettings.scale(0);
+                SPDSettings.zoom(2);
+                SPDSettings.put("assist.mobile-layout-version", 2);
+            }
 		//end of prefs setup
 
 		IOSApplicationConfiguration config = new IOSApplicationConfiguration();

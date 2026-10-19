@@ -90,44 +90,13 @@ public class IOSPlatformSupport extends PlatformSupport {
 	}
 
 	@Override
-	public RectF getSafeInsets(int level) {
-		RectF insets = super.getSafeInsets(INSET_ALL);
-
-		//magic number BS for larger status bar caused by dynamic island
-		boolean hasDynamicIsland = insets.top / Gdx.graphics.getBackBufferScale() >= 51;
-
-		//iOS gives us ALL insets by default, and so we need to filter from there:
-
-		//ignore the home indicator if we're in fullscreen
-		if (!supportsFullScreen() || SPDSettings.fullscreen()){
-			insets.bottom = 0;
-		}
-
-		//only cutouts can be on top/left/right, which are never blocking
-		if (level == INSET_BLK){
-			insets.left = insets.top = insets.right = 0;
-		} else if (level == INSET_LRG && hasDynamicIsland){
-			//Dynamic Island counts as a 'small cutout'
-			insets.left = insets.top = insets.right = 0;
-		}
-
-		//if we are in landscape, the display cutout is only actually on one side, so cancel the other
-		if (Game.width > Game.height){
-			if (UIApplication.getSharedApplication().getStatusBarOrientation().equals(UIInterfaceOrientation.LandscapeLeft)){
-				insets.left = 0;
-			} else {
-				insets.right = 0;
-			}
-		}
-
-		//finally iOS is very conservative with these insets, we can shrink them a bit.
-		insets.top /= hasDynamicIsland ? 1.2f : 1.4f;
-		insets.left /= hasDynamicIsland ? 1.2f : 1.4f;
-		insets.right /= hasDynamicIsland ? 1.2f : 1.4f;
-		insets.bottom /= 2; //home bar inset is especially big for no reason
-
-		return insets;
-	}
+    public RectF getSafeInsets(int level) {
+        RectF insets = super.getSafeInsets(INSET_ALL);
+        // Controls must remain inside both the actual cutout and home-indicator
+        // insets. Drawing the game fullscreen does not make these touch-safe.
+        if (level == INSET_BLK) insets.left = insets.top = insets.right = 0;
+        return insets;
+    }
 
 	@Override
 	public void updateSystemUI() {
