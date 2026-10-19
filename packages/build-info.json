@@ -1,12 +1,23 @@
 {
-  "source_commit": "29f99620efe8b087e988991394c6531083b5618c",
+  "source_commit": "8fea1c60a29849c7a02c5fdf9676ff1bc9c03de9",
   "upstream_commit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
   "bundle_id": "io.github.sy129.shatteredassist.apple",
   "architecture": "arm64",
   "minimum_ios": "13.0",
   "signing": "ad-hoc; user must re-sign with valid certificate",
   "device_validation": "pending: iPhone 16 Pro / iOS 27.0.1",
-  "source_zip_sha256": "fae6de64f5eb4aa3b96ae90f9e75fde40850e03137b554166b65b0051952155a",
-  "sha256": "7a8aa815001ca0aebb07b197d6b63ed35790222238c8f9a0cbe8808d3943599a",
-  "bytes": 62942957
+  "features": [
+    "Chinese draggable/hidden assist menu",
+    "8-way touch joystick",
+    "landscape safe-area layout",
+    "independent home",
+    "marriage and child growth",
+    "3-species breeding ecology",
+    "mount riding",
+    "CC0 slash animation"
+  ],
+  "external_art_commit": "e8674a03ab4456802f71f848c4df79eccca23f7a",
+  "source_zip_sha256": "086b9078755e2c006ce2caa7577b966016640bc0e2ceac90d8464833c290670b",
+  "sha256": "e5bc28df26697b821c6aa6ddba1fe84d4f3998b2d4c0476adb1843e54239ff1d",
+  "bytes": 66177374
 }
