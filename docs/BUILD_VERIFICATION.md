@@ -1,3 +1,18 @@
+# 最新925版验证
+
+925已重新编译并发布，修复924的iOS运行库兼容性缺陷。详情见[闪退问题与修复](IOS_CRASH_924.md)、[新版IPA校验](verification/925-ipa-integrity.json)、[新版回归检查](verification/925-regression.json)。
+
+- 源码提交：e8ea04c93c5e4b0e5428b4711fc1354593c7711f。
+- [原生构建成功](https://github.com/sy-129/shattered-assist-ios/actions/runs/39351948716)，25项测试、345项运行库API引用检查通过。
+- [Releases下载](https://github.com/sy-129/shattered-assist-ios/releases/tag/v4.0.2-assist.4)，GitHub服务器给出的IPA摘要与本地验包一致。
+- [Releases及Packages发布流程](https://github.com/sy-129/shattered-assist-ios/actions/runs/39352614716)。
+- IPA SHA256：02e126cb0c49b34ba4e8d5338318ec8821175cbf926903d2cc0f1cf01e9e8860，66,178,695字节。
+- 源码ZIP SHA256：fabd6ed1791bee53682352f5f3696efbe6b7a51da4ef3e117eb0a828a77f6c17，68,909,152字节。
+- REA命令：`rea inspect-artifact ShatteredAssist-925.ipa --format json`，证据`ev_a9ce61e14965518e3cbb7050df6610850af0c363d3524a08c2eebc19e03f62c5`。
+- 925目标设备实装复验待用户反馈。以下为旧924交付时的历史记录；旧版随后发现运行库兼容性问题，请安装925。
+
+---
+
 # 4.0.2-assist.3 / 924 交付验证
 
 - 源码提交：`8fea1c60a29849c7a02c5fdf9676ff1bc9c03de9`。

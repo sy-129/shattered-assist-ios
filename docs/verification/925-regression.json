@@ -1,0 +1,16 @@
+{
+  "version": "4.0.2-assist.4",
+  "build": 925,
+  "logic_tests": {
+    "tests": 25,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "runtime_api_references": 345,
+  "old_api_regression_rejections": 4,
+  "desktop_interaction_check": "passed",
+  "device_tested": false,
+  "source_commit": "e8ea04c93c5e4b0e5428b4711fc1354593c7711f",
+  "old_native_warning": "Warning: java.util.function.BooleanSupplier is a phantom class!"
+}

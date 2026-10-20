@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "ipa_sha256": "02e126cb0c49b34ba4e8d5338318ec8821175cbf926903d2cc0f1cf01e9e8860",
+  "bytes": 66178695,
+  "bundle_id": "io.github.sy129.shatteredassist.apple",
+  "architecture": "arm64",
+  "minimum_ios": "13.0",
+  "main_code_pages_verified": 11676,
+  "main_special_slots_verified": 3,
+  "resource_hashes_verified": 518,
+  "nested_code_entries": 0,
+  "entitlements": {},
+  "device_tested": false
+}
