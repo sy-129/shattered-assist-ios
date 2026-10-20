@@ -1,6 +1,8 @@
 {
-  "source_commit": "8fea1c60a29849c7a02c5fdf9676ff1bc9c03de9",
+  "source_commit": "e8ea04c93c5e4b0e5428b4711fc1354593c7711f",
   "upstream_commit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+  "version_name": "4.0.2-assist.4",
+  "version_code": "925",
   "bundle_id": "io.github.sy129.shatteredassist.apple",
   "architecture": "arm64",
   "minimum_ios": "13.0",
@@ -17,7 +19,7 @@
     "CC0 slash animation"
   ],
   "external_art_commit": "e8674a03ab4456802f71f848c4df79eccca23f7a",
-  "source_zip_sha256": "086b9078755e2c006ce2caa7577b966016640bc0e2ceac90d8464833c290670b",
-  "sha256": "e5bc28df26697b821c6aa6ddba1fe84d4f3998b2d4c0476adb1843e54239ff1d",
-  "bytes": 66177374
+  "source_zip_sha256": "fabd6ed1791bee53682352f5f3696efbe6b7a51da4ef3e117eb0a828a77f6c17",
+  "sha256": "02e126cb0c49b34ba4e8d5338318ec8821175cbf926903d2cc0f1cf01e9e8860",
+  "bytes": 66178695
 }
