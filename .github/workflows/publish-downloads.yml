@@ -1,4 +1,5 @@
 name: Publish release and distribution package
+# Publish existing verified binaries; do not rebuild the iOS application.
 on:
   push:
     branches: ['主要的']
