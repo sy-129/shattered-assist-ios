@@ -37,7 +37,9 @@
 
 ## 安装
 
-构建成功后下载 [ShatteredAssist.ipa](packages/ShatteredAssist.ipa?raw=true)，导入轻松签，使用你自己的有效证书及描述文件签名后安装。无需额外授权码、巨魔、越狱或跨进程权限。证书有效性、设备登记、开发者模式等仍遵循你的签名方式要求。
+请使用 [Releases 最新版本](https://github.com/sy-129/shattered-assist-ios/releases/latest) 附件中的 ShatteredAssist.ipa，导入轻松签，使用你自己的有效证书及描述文件签名后安装。无需额外授权码、巨魔、越狱或跨进程权限。证书有效性、设备登记、开发者模式等仍遵循你的签名方式要求。
+
+924版已报告进入游戏/家园闪退；925版替换缺失的iOS运行库API，[原因与复验说明](docs/IOS_CRASH_924.md)。[Packages文件分发包](https://github.com/sy-129/shattered-assist-ios/pkgs/container/shattered-assist-ios)另含IPA、源码及校验信息；手机安装请选择Release附件。
 
 目标设备：iPhone 16 Pro / iOS 27.0.1。云端编译成功不代表已在该设备实测，实际状态见 packages/build-info.json。
 
@@ -58,7 +60,7 @@
 macOS + Xcode + JDK21：
 
 ```sh
-./gradlew -PiosOnly :core:test
+./gradlew -PiosOnly :core:test :ios:verifyRuntimeApi
 ./gradlew -PiosOnly -Probovm.archs=arm64 -Probovm.iosSkipSigning=true :ios:createIPA
 python3 tools/package_ios.py
 ```

@@ -18,14 +18,16 @@ import com.watabou.utils.PointF;
 public class TouchJoystick extends Component {
     private final TouchStickState state = new TouchStickState();
     public interface DirectionSink { void direction(int dx, int dy); }
+    // RoboVM's Android-derived runtime does not include java.util.function.
+    public interface Blocked { boolean getAsBoolean(); }
     private final DirectionSink sink;
-    private final java.util.function.BooleanSupplier blocked;
+    private final Blocked blocked;
     private final Image base, thumb;
     private final PointerArea touch;
     public TouchJoystick(CellSelector selector) {
         this(selector::setTouchDirection, () -> GameScene.interfaceBlockingHero() || Dungeon.hero == null || !Dungeon.hero.isAlive());
     }
-    public TouchJoystick(DirectionSink sink, java.util.function.BooleanSupplier blocked) {
+    public TouchJoystick(DirectionSink sink, Blocked blocked) {
         this.sink = sink;
         this.blocked = blocked;
         base = new Image(circle("assist.stick.base", false));

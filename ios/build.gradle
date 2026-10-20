@@ -54,3 +54,15 @@ dependencies {
     implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
     implementation "com.badlogicgames.gdx-controllers:gdx-controllers-ios:$gdxControllersVersion"
 }
+
+// Host JDK compilation alone cannot verify RoboVM's older Java API surface.
+tasks.register('verifyRuntimeApi', Exec) {
+    dependsOn ':core:classes', ':SPD-classes:classes', compileJava
+    doFirst {
+        def runtime = configurations.runtimeClasspath.files.find { it.name == "robovm-rt-${robovmVersion}.jar" }
+        if (runtime == null) throw new GradleException('RoboVM runtime JAR not resolved')
+        commandLine 'python3', rootProject.file('tools/verify_ios_runtime.py'), '--runtime', runtime,
+            project(':core').file('build/classes/java/main'),
+            project(':SPD-classes').file('build/classes/java/main'), file('build/classes/java/main')
+    }
+}

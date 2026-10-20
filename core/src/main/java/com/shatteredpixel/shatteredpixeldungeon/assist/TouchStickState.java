@@ -13,13 +13,13 @@ public final class TouchStickState {
     }
     public boolean move(int id, float x, float y) {
         if (id != pointer || pointer == -1) return false;
-        if (!Float.isFinite(x) || !Float.isFinite(y)) { cancel(); return false; }
+        if (!finite(x) || !finite(y)) { cancel(); return false; }
         double length = Math.hypot(x, y);
         float scale = (float)Math.max(1, length);
         this.x = x / scale;
         this.y = y / scale;
         if (length < 0.22) { dx = dy = 0; return true; }
-        int sector = Math.floorMod((int)Math.round(Math.atan2(y, x) / (Math.PI / 4)), 8);
+        int sector = ((int)Math.round(Math.atan2(y, x) / (Math.PI / 4)) + 8) % 8;
         dx = new int[]{1,1,0,-1,-1,-1,0,1}[sector];
         dy = new int[]{0,1,1,1,0,-1,-1,-1}[sector];
         return true;
@@ -31,7 +31,10 @@ public final class TouchStickState {
     }
     public void cancel() { pointer = -1; dx = dy = 0; x = y = 0; }
     public static float clamp(float value, float min, float max) {
-        if (!Float.isFinite(value)) value = min;
+        if (!finite(value)) value = min;
         return Math.max(min, Math.min(Math.max(min, max), value));
+    }
+    private static boolean finite(float value) {
+        return !Float.isNaN(value) && !Float.isInfinite(value);
     }
 }

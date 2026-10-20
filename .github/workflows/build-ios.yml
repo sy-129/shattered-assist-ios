@@ -24,7 +24,7 @@ jobs:
           python3 tools/verify_external_assets.py
           chmod +x gradlew
           set -o pipefail
-          ./gradlew -PiosOnly :core:test --no-daemon --console=plain 2>&1 | tee assist-tests.log
+          ./gradlew -PiosOnly :core:test :ios:verifyRuntimeApi --no-daemon --console=plain 2>&1 | tee assist-tests.log
       - name: Build native ARM64 iOS app without certificate
         run: |
           set -o pipefail

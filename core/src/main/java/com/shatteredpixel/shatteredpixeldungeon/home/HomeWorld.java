@@ -45,7 +45,8 @@ public final class HomeWorld {
     public boolean rain() { return day%5==0 || (season().equals("春") && day%3==0); }
     private int next(int bound) {
         randomState=randomState*6364136223846793005L+1442695040888963407L;
-        return (int)Math.floorMod(randomState,(long)bound);
+        long remainder=randomState%bound;
+        return (int)(remainder<0?remainder+bound:remainder);
     }
     public static boolean passable(int x,int y) {
         if(x<1 || y<1 || x>=WIDTH-1 || y>=HEIGHT-1) return false;
@@ -168,7 +169,9 @@ public final class HomeWorld {
         animals.addAll(newborns);
         if(!riding())ridingId=-1;
         if(news.isEmpty())news.add("作物生长、草地恢复，动物完成一天的觅食和饮水。");
-        events="第"+day+"日 · "+season()+"季 · "+(rain()?"雨天":"晴天")+"\n"+String.join("\n",news);
+        StringBuilder text=new StringBuilder();
+        for(String item:news){if(text.length()>0)text.append('\n');text.append(item);}
+        events="第"+day+"日 · "+season()+"季 · "+(rain()?"雨天":"晴天")+"\n"+text;
         return events;
     }
     public String summary() {

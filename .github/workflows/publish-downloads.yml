@@ -1,15 +1,17 @@
 name: Publish release and distribution package
 # Publish existing verified binaries; do not rebuild the iOS application.
 on:
-  push:
+  workflow_run:
+    workflows: ['Build Shattered Assist iOS']
+    types: [completed]
     branches: ['主要的']
-    paths: ['.github/workflows/publish-downloads.yml']
   workflow_dispatch:
 permissions:
   contents: write
   packages: write
 jobs:
   publish:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,19 +20,38 @@ jobs:
         run: |
           sha256sum -c ShatteredAssist.ipa.sha256
           sha256sum -c ShatteredAssist-source.zip.sha256
+      - name: Read built version
+        id: version
+        run: |
+          python3 - <<'PY'
+          import json,os,re
+          from pathlib import Path
+          info=json.loads(Path('packages/build-info.json').read_text())
+          name=info['version_name']
+          assert re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+-assist\.[0-9]+',name)
+          assert re.fullmatch(r'[a-f0-9]{40}',info['source_commit'])
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('name='+name+'\ncommit='+info['source_commit']+'\n')
+          PY
       - name: Publish release downloads
         env:
           GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.name }}
+          SOURCE_COMMIT: ${{ steps.version.outputs.commit }}
         run: |
           set -euo pipefail
-          tag=v4.0.2-assist.3
+          tag="v$VERSION"
+          if gh release view v4.0.2-assist.3 >/dev/null 2>&1; then
+            gh release edit v4.0.2-assist.3 --prerelease --latest=false --title '4.0.2-assist.3（924）— 已知 iOS 闪退，请更新'
+          fi
           if ! gh release view "$tag" >/dev/null 2>&1; then
-            gh release create "$tag" --target 8fea1c60a29849c7a02c5fdf9676ff1bc9c03de9 --title 'Shattered Assist 4.0.2-assist.3（924）' --notes-file docs/BUILD_VERIFICATION.md
+            gh release create "$tag" --target "$SOURCE_COMMIT" --title "Shattered Assist $VERSION" --notes-file docs/IOS_CRASH_924.md --latest
           fi
           gh release upload "$tag" packages/ShatteredAssist.ipa packages/ShatteredAssist-source.zip packages/ShatteredAssist.ipa.sha256 packages/ShatteredAssist-source.zip.sha256 packages/build-info.json --clobber
       - name: Publish GitHub Packages distribution image
         env:
           GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.name }}
         run: |
           set -euo pipefail
           printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
@@ -41,15 +62,14 @@ jobs:
           LABEL org.opencontainers.image.source="https://github.com/sy-129/shattered-assist-ios"
           LABEL org.opencontainers.image.title="Shattered Assist iOS distribution files"
           LABEL org.opencontainers.image.description="IPA, source ZIP and checksums for download; not a runnable game container. Install the IPA on iOS after signing."
-          LABEL org.opencontainers.image.version="4.0.2-assist.3"
           LABEL org.opencontainers.image.licenses="GPL-3.0-or-later"
           COPY . /distribution/
           EOF
           image="ghcr.io/${GITHUB_REPOSITORY,,}"
-          docker build -t "$image:4.0.2-assist.3" -t "$image:latest" distribution
-          docker push "$image:4.0.2-assist.3"
+          docker build --label "org.opencontainers.image.version=$VERSION" -t "$image:$VERSION" -t "$image:latest" distribution
+          docker push "$image:$VERSION"
           docker push "$image:latest"
-          docker manifest inspect "$image:4.0.2-assist.3" > package-manifest.json
+          docker manifest inspect "$image:$VERSION" > package-manifest.json
       - uses: actions/upload-artifact@v4
         with:
           name: package-publication-evidence

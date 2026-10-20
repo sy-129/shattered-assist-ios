@@ -40,6 +40,7 @@ with tempfile.TemporaryDirectory() as temporary:
     subprocess.run(['codesign', '--verify', '--deep', '--strict', str(app)], check=True)
     commit = os.environ.get('GITHUB_SHA', 'local')
     provenance = {'source_commit': commit, 'upstream_commit': '57a4e06a4caf162446d1c28caa7983f0493fecf0',
+                  'version_name': info['CFBundleVersionString'], 'version_code': info['CFBundleVersion'],
                   'bundle_id': info['CFBundleIdentifier'], 'architecture': archs,
                   'minimum_ios': info.get('MinimumOSVersion'), 'signing': 'ad-hoc; user must re-sign with valid certificate',
                   'device_validation': 'pending: iPhone 16 Pro / iOS 27.0.1',

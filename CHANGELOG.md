@@ -1,5 +1,12 @@
 # 更新记录
 
+## 4.0.2-assist.4 / 925
+
+- 修复进入地牢与家园时会触发的RoboVM运行库API缺失：替换BooleanSupplier、Float.isFinite、Math.floorMod和String.join。
+- 增加实际iOS运行库的字节码成员检查，避免只在电脑Java上测试而遗漏原生运行差异。
+- 成功构建后自动向Releases和GitHub Packages发布同一份IPA、源码和校验信息。924版标注为已知闪退旧版。
+- 具体预期、现象、位置、复现及证据见docs/IOS_CRASH_924.md；925实机复验待用户反馈。
+
 ## 4.0.2-assist.3 / 924
 
 - 方向盘同方向事件去重，避免手指抖动导致家园移动异常加速。
